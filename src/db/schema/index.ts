@@ -22,6 +22,7 @@ export const users = sqliteTable(
     updatedAt: timestamp("updatedAt").notNull(),
     locale: text("locale").notNull(),
     timezone: text("timezone"),
+    isAdmin: boolean("isAdmin").default(false).notNull(),
   },
   (table) => {
     return {
@@ -139,12 +140,3 @@ export const notifications = sqliteTable("notifications", {
 
 export type InsertNotification = InferInsertModel<typeof notifications>;
 export type SelectedUser = InferSelectModel<typeof users>;
-
-export const plans = sqliteTable("plans", {
-  id: integer("id").primaryKey().notNull(),
-  name: text("name").notNull(),
-  priceBase: integer("price").notNull(),
-  pricePerUser: integer("pricePerUser").notNull(),
-  createdAt: timestamp("createdAt").notNull(),
-  updatedAt: timestamp("updatedAt").notNull(),
-});
