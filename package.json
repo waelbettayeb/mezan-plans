@@ -5,7 +5,7 @@
   "types": "src/types",
   "type": "module",
   "scripts": {
-    "dev": "nodemon -e js,ts,mts,cjs --watch ../../packages --watch ../api --inspect --exec node --experimental-specifier-resolution=node --import=./register.js ./src/app.ts",
+    "dev": "nodemon -e js,ts,mts,cjs --watch ./src --inspect --exec node --experimental-specifier-resolution=node --import=./register.js ./src/app.ts",
     "start": "node --experimental-specifier-resolution=node --import=./register.js ./src/app.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --ext .ts ./src",

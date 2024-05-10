@@ -47,20 +47,21 @@ the lifecycle of a subscription is:
 
 more tables may exist in a more complete "realistic" scenario, but this is a simplified version of a subscriptions system.
 
-## Core Problem Statement
+## Problem Statement (required)
 
-Define the plans module.
+Define the plans module & write atleast 5 tests that verify the core functionality works in the plans module.
 
 The module should support a number of method:
-- create & update methods, not publicly accessible, admin access only
-- read method, accessible publicly
-- a prorated upgrade price calculation method: the system should allow upgrading to a more expensive plan in the middle of a subscription, so, we need to create a method that can determine the price for an "upgrade", based on price difference between two plans and the number of days remaining in the currently paid cycle, you can assume all plans are monthly cycles only, no annual plans are to be considered here
+1. create & update methods, not publicly accessible, admin access only
+2. read method, accessible publicly
+3. a prorated upgrade price calculation method: the system should allow upgrading to a more expensive plan in the middle of a subscription, so, we need to create a method that can determine the price for an "upgrade", based on price difference between two plans and the number of days remaining in the currently paid cycle, you can assume all plans are monthly cycles only, no annual plans are to be considered here
 
-You should also create testing scenarios for the new plans module, in the integration testing directory, by following the conventions done by other tests.
+The best way to test the endpoints/methods you are building is by running the integration tests and creating testing scenarios for the new plans module, in the integration testing directory, by following the conventions done by other tests.
 
-Write atleast 5 tests that verify the core functionality works in the plans module.
+Trpc won't work well with playground testing tools like postman.
 
-## bonus implementation (if you have time)
+
+## schema design implementation (bonus)
 
 without defining all the other modules in the billing module, just define the shape of the tables to be defined for the following:
 - subscriptions
@@ -69,14 +70,14 @@ without defining all the other modules in the billing module, just define the sh
 
 And create some scaffolding for the tests, the tests would be failing initially, by simply defining the purpose of some of the core integration tests for these modules
 
-## bonus question
+## question (bonus)
 
 If you were to introduce two more props to plans:
 
 1. defaultUsers: number of users included in the plan by default
 2. pricePerUser: price per additional user beyond the default
 
-How would this affect the current upgrade calculation?
+How would this affect the current plan upgrade calculation?
 
 ### answer here:
 ---

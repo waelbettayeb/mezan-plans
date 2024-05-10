@@ -1,6 +1,4 @@
-import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { relations } from "drizzle-orm";
-import { primaryKey } from "drizzle-orm/sqlite-core";
 import {
   sqliteTable,
   text,
@@ -33,35 +31,7 @@ export const users = sqliteTable(
 
 export const userRelations = relations(users, ({ many }) => ({
   teams: many(teams),
-  accounts: many(accounts),
   emailVerifications: many(emailVerifications),
-}));
-
-export const accounts = sqliteTable(
-  "accounts",
-  {
-    userId: integer("userId")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    provider: text("provider").notNull(),
-    providerAccountId: text("providerAccountId").notNull(),
-    refreshToken: text("refreshToken").notNull(),
-    accessToken: text("accessToken").notNull(),
-    expiresAt: timestamp("expiresAt"),
-    scope: text("scope"),
-  },
-  (account) => ({
-    compoundKey: primaryKey({
-      columns: [account.provider, account.providerAccountId],
-    }),
-  })
-);
-
-export const accountRelations = relations(accounts, ({ one }) => ({
-  user: one(users, {
-    fields: [accounts.userId],
-    references: [users.id],
-  }),
 }));
 
 export const emailVerifications = sqliteTable("emailVerifications", {
@@ -124,19 +94,18 @@ export const teamsRelations = relations(teams, ({ one }) => ({
   }),
 }));
 
-export const notifications = sqliteTable("notifications", {
-  id: integer("id").primaryKey().notNull(),
-  createdAt: timestamp("createdAt").notNull(),
-  updatedAt: timestamp("updatedAt").notNull(),
-  channel: text("channel", {
-    enum: ["sms", "mail", "push", "whatsapp"],
-  }).notNull(),
-  title: text("title"),
-  sent: boolean("sent").default(false).notNull(),
-  sendTo: text("sendTo").notNull(),
-  eventType: text("eventType").notNull(),
-  locale: text("locale").notNull(),
-});
+// export const plans = sqliteTable("plans", {
+// todo: add plans table schema
+// });
 
-export type InsertNotification = InferInsertModel<typeof notifications>;
-export type SelectedUser = InferSelectModel<typeof users>;
+// export const subscriptions = sqliteTable("subscriptions", {
+//   // todo: add subscriptions table schema
+// });
+
+// export const orders = sqliteTable("orders", {
+//   // todo: add orders table schema
+// });
+
+// export const subscriptionActivations = sqliteTable("subscriptionActivations", {
+//   // todo: add subscriptionActivations table schema
+// });
