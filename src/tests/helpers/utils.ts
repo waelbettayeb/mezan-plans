@@ -62,5 +62,17 @@ export const setupUser = async (user: User) => {
     otpCode: verifyRequest!.otpCode,
   });
 
-  return { teamId, calendarSlug: authenticatedUser };
+  return { teamId, caller: authenticatedUser };
+};
+
+export const setupAdminUser = async (user: User) => {
+  //register user
+  const { teamId, caller: userCaller } = await setupUser(user);
+  //update user to admin
+  await db
+    .update(schema.users)
+    .set({ emailVerified: true, isAdmin: true })
+    .where(eq(schema.users.email, user.email));
+
+  return { teamId, caller: userCaller };
 };
