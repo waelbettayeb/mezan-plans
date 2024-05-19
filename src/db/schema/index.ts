@@ -113,7 +113,9 @@ export const subscriptions = sqliteTable("subscriptions", {
   planId: integer("planId")
     .notNull()
     .references(() => plans.id, { onDelete: "restrict", onUpdate: "restrict" }),
-  startDate: timestamp("startDate").notNull(),
+  teamId: integer("teamId")
+    .notNull()
+    .references(() => teams.id, { onDelete: "restrict", onUpdate: "restrict" }),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
   isActive: boolean("isActive").default(true).notNull(),
@@ -130,11 +132,12 @@ export const subscriptionsRelations = relations(
       fields: [subscriptions.planId],
       references: [plans.id],
     }),
-    orders: many(orders, {
-      relationName: "subscription",
+    team: one(teams, {
+      fields: [subscriptions.teamId],
+      references: [teams.id],
     }),
-    subscriptionActivations: many(subscriptionActivations, {
-      relationName: "subscription",
+    orders: many(orders, {
+      relationName: "orders_subscription",
     }),
   })
 );
@@ -155,6 +158,11 @@ export const ordersRelations = relations(orders, ({ one }) => ({
   subscription: one(subscriptions, {
     fields: [orders.subscriptionId],
     references: [subscriptions.id],
+    relationName: "orders_subscription",
+  }),
+  subscriptionActivations: one(subscriptionActivations, {
+    fields: [orders.id],
+    references: [subscriptionActivations.orderId],
   }),
 }));
 
