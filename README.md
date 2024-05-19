@@ -79,5 +79,6 @@ If you were to introduce two more props to plans:
 
 How would this affect the current plan upgrade calculation?
 
-### answer here:
----
+### answer here
+
+Introducing `defaultUsers` and `pricePerUser` changes the plan upgrade calculation. The `defaultUsers` is the number of users included in the plan by default. If the current number of users is less than or equal to the `defaultUsers` of the new plan, the upgrade price is the difference in the base prices of the two plans. If the current number of users exceeds the `defaultUsers` of the new plan, additional charges apply. The `pricePerUser` is the price for each user beyond the `defaultUsers`. If the current number of users exceeds the `defaultUsers` of the new plan, the upgrade price is the difference in the base prices plus the cost for the extra users, calculated as the excess number of users multiplied by the `pricePerUser`.
